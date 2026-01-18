@@ -1,0 +1,10 @@
+/.venv/
+/__pycache__/
+/data/
+/output/
+/dist/
+/mkgmap/
+*.osm
+*.dmg
+/garmin/
+.python-version

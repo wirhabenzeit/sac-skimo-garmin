@@ -1,0 +1,26 @@
+# --- lines file ---
+
+# Set default name for network segments if missing
+sac:access=* & name!=* { set name='Ski Path' }
+sac:access=caution & name='Ski Path' { set name='Ski Path (Caution)' }
+sac:access=foot & name='Ski Path' { set name='Ski Path (Foot)' }
+
+# Network Access Styling - Mapped to custom TYP 0x10f..
+
+# 1. Specific Access Types (Must come FIRST)
+# Foot Only (Dotted) -> 0x10f02
+piste:type=skitour & sac:access=foot [0x10f02 resolution 20]
+
+# Caution (Dashed) -> 0x10f03
+piste:type=skitour & sac:access=caution [0x10f03 resolution 20]
+
+# 2. Standard Types
+# Standard (Solid Blue) -> 0x10f01
+piste:type=skitour & sac:access=standard [0x10f01 resolution 20]
+
+# 3. Fallbacks
+piste:type=skitour & sac:access!=* [0x10f01 resolution 20]
+route=piste & piste:type=skitour [0x10f01 resolution 20]
+
+# Snowshoe styling -> 0x10f04
+piste:type=snowshoe [0x10f04 resolution 20]

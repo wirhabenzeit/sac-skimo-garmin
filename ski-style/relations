@@ -1,0 +1,6 @@
+# --- relations file ---
+type=route & route=piste & piste:type=skitour {
+    apply {
+        set piste:type=skitour;
+    }
+}
