@@ -32,6 +32,7 @@ Generate the Garmin map file (`dist/gmapsuppsac.img`):
 This runs `uv run convert.py` twice, which contains inline dependencies (PEP 723).
 
 Optional BaseCamp mount (macOS):
+
 ```bash
 ./build.sh --basecamp
 # or provide an ID used for the DMG/volume name:
@@ -39,6 +40,7 @@ Optional BaseCamp mount (macOS):
 ```
 
 Keep intermediate OSM files:
+
 ```bash
 ./build.sh --keep-osm
 ```
@@ -86,6 +88,7 @@ _Note: The map is **Non-Routable**. It is purely a visual overlay._
 
 The map is built from the **Swiss Alpine Club (SAC) Ski Tours** dataset provided by Swisstopo.
 
+- **Source**: https://data.geo.admin.ch/browser/index.html#/collections/ch.swisstopo-karto.skitouren
 - **Original Format**: GeoPackage (`.gpkg`).
 - **Layers**: The tool expects two files: `ski_routes_2056.gpkg` (Rich metadata) and `ski_network_2056.gpkg` (Connectivity graph).
 
@@ -113,9 +116,26 @@ _Note: The metadata from `ski_routes` (e.g., names) is NOT currently merged onto
       ```
 2.  **Compilation**: `mkgmap` reads both OSM files, applies the style rules (`ski-style/`), and compiles them into a **single** Garmin Image file (`dist/gmapsuppsac.img`) with the custom visual definitions from `ski.txt`.
 
+## Disclaimer
+
+The SAC ski routes cover Switzerland and nearby border areas. The dataset is produced by the Swiss Alpine Club, checked by cantonal hunting authorities for wildlife compatibility, and updated annually, but actual routes depend on current conditions. SAC and Swisstopo accept no liability for accuracy or accidents; detailed tour planning is recommended. More info: https://www.sac-cas.ch/en/.
+
 ## License
 
 Code: Open Source.
 Data: Copyright Swiss Alpine Club (SAC) / Swisstopo. Please respect their terms of use.
 
 ---
+
+## Releasing
+
+Build locally and attach the artifact to a GitHub release.
+
+```bash
+./build.sh
+git tag -a v0.1.0 -m "SkimoSAC v0.1.0"
+git push origin v0.1.0
+gh release create v0.1.0 dist/gmapsuppsac.img \
+  --title "SkimoSAC v0.1.0" \
+  --notes "Release notes here."
+```
